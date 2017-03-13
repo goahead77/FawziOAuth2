@@ -26,26 +26,27 @@
 <div class="container">
     <h1>Sparklr</h1>
 
-    <%
-        if (session.getAttribute(AbstractAuthenticationProcessingFilter.SPRING_SECURITY_LAST_EXCEPTION_KEY) != null
-                && !(session
-                .getAttribute(AbstractAuthenticationProcessingFilter.SPRING_SECURITY_LAST_EXCEPTION_KEY) instanceof UnapprovedClientAuthenticationException)) {
-    %>
-    <div class="error">
-        <h2>Woops!</h2>
 
-        <p>
-            Access could not be granted. (<%=((AuthenticationException) session
-                .getAttribute(AbstractAuthenticationProcessingFilter.SPRING_SECURITY_LAST_EXCEPTION_KEY))
-                .getMessage()%>)
-        </p>
-    </div>
-    <%
-        }
-    %>
-    <c:remove scope="session" var="SPRING_SECURITY_LAST_EXCEPTION" />
+    <%--<%--%>
+        <%--if (session.getAttribute(AbstractAuthenticationProcessingFilter.SPRING_SECURITY_LAST_EXCEPTION_KEY) != null--%>
+                <%--&& !(session--%>
+                <%--.getAttribute(AbstractAuthenticationProcessingFilter.SPRING_SECURITY_LAST_EXCEPTION_KEY) instanceof UnapprovedClientAuthenticationException)) {--%>
+    <%--%>--%>
+    <%--<div class="error" <authz:authentication property="username" >--%>
+        <%--<h2>Woops!</h2>--%>
 
-    <authz:authorize ifAllGranted="ROLE_USER">
+        <%--<p>--%>
+            <%--Access could not be granted. (<%=((AuthenticationException) session--%>
+                <%--.getAttribute(AbstractAuthenticationProcessingFilter.SPRING_SECURITY_LAST_EXCEPTION_KEY))--%>
+                <%--.getMessage()%>)--%>
+        <%--</p>--%>
+    <%--</div>--%>
+    <%--<%--%>
+        <%--}--%>
+    <%--%>--%>
+    <%--<c:remove scope="session" var="SPRING_SECURITY_LAST_EXCEPTION" />--%>
+
+    <authz:authorize access="hasRole('ROLE_USER')">
         <h2>Please Confirm</h2>
 
         <p>

@@ -1,3 +1,4 @@
+<%@ page isELIgnored="false" %>
 <%@ taglib prefix="authz"
            uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -33,17 +34,19 @@
             <authz:authorize access="hasRole('ROLE_USER')">
                 <li><a href="${base}login.jsp">login</a></li>
             </authz:authorize>
-            <li><a href="${base}sparklr/photos">sparklr pics</a></li>
-            <li><a href="${base}facebook/info" class="selected">facebook
-                friends</a></li>
+            <li><a href="${base}sparklr/photos" class="selected">sparklr
+                pics</a></li>
+            <li><a href="${base}facebook/info">facebook friends</a></li>
         </ul>
     </div>
 </div>
+
 <div class="container">
-    <h1>Your Facebook Friends:</h1>
-    <ul>
-        <c:forEach var="friendName" items="${friends}">
-            <li><c:out value="${friendName}" /></li>
+    <h1>Your Sparklr Photos</h1>
+    <ul class="list-unstyled">
+        <c:forEach var="sparklrPhotoId" items="${photoIds}">
+            <li><img
+                    src="${base}sparklr/photos/${sparklrPhotoId}" /></li>
         </c:forEach>
     </ul>
 </div>

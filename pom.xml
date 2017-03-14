@@ -121,6 +121,12 @@
       </dependency>
 
   </dependencies>
+    <repositories>
+        <repository>
+            <id>nexus</id>
+            <url>http://repo.mocki.xyz/repository/maven-public/</url>
+        </repository>
+    </repositories>
     <dependencyManagement>
         <dependencies>
             <dependency>

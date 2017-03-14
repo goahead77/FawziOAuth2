@@ -80,7 +80,7 @@ public class OAuth2ServerConfig {
         @Qualifier("authenticationManagerBean")
         private AuthenticationManager authenticationManager;
 
-        @Value("${tonr.redirect:http://localhost:8081/tonr2/sparklr/redirect}")
+        @Value("${tonr.redirect:http://localhost:8081/tonr/sparklr/redirect}")
         private String tonrRedirectUri;
 
         @Override
@@ -145,7 +145,7 @@ public class OAuth2ServerConfig {
 
         @Override
         public void configure(AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
-            oauthServer.realm("sparklr2/client");
+            oauthServer.realm("sparklr/client");
         }
     }
     protected static class Stuff {

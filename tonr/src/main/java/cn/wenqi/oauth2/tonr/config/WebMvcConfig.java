@@ -139,19 +139,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
             return details;
         }
 
-        @Bean
-        public OAuth2ProtectedResourceDetails facebook() {
-            AuthorizationCodeResourceDetails details = new AuthorizationCodeResourceDetails();
-            details.setId("facebook");
-            details.setClientId("233668646673605");
-            details.setClientSecret("33b17e044ee6a4fa383f46ec6e28ea1d");
-            details.setAccessTokenUri("https://graph.facebook.com/oauth/access_token");
-            details.setUserAuthorizationUri("https://www.facebook.com/dialog/oauth");
-            details.setTokenName("oauth_token");
-            details.setAuthenticationScheme(AuthenticationScheme.query);
-            details.setClientAuthenticationScheme(AuthenticationScheme.form);
-            return details;
-        }
+
 
         @Bean
         public OAuth2ProtectedResourceDetails trusted() {
@@ -161,16 +149,6 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
             details.setAccessTokenUri(accessTokenUri);
             details.setScope(Arrays.asList("trust"));
             return details;
-        }
-
-        @Bean
-        public OAuth2RestTemplate facebookRestTemplate(OAuth2ClientContext clientContext) {
-            OAuth2RestTemplate template = new OAuth2RestTemplate(facebook(), clientContext);
-            MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
-            converter.setSupportedMediaTypes(Arrays.asList(MediaType.APPLICATION_JSON,
-                    MediaType.valueOf("text/javascript")));
-            template.setMessageConverters(Arrays.<HttpMessageConverter<?>>asList(converter));
-            return template;
         }
 
         @Bean

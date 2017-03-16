@@ -86,12 +86,12 @@ public class OAuth2ServerConfig {
         @Override
         public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 
-            clients.inMemory().withClient("tonr")
+            clients.inMemory().withClient("tonr")//（必填）客户端ID。
                     .resourceIds(SPARKLR_RESOURCE_ID)
-                    .authorizedGrantTypes("authorization_code", "implicit")
-                    .authorities("ROLE_CLIENT")
-                    .scopes("read", "write")
-                    .secret("secret")
+                    .authorizedGrantTypes("authorization_code", "implicit")//授予客户端使用的授权类型。默认值为空
+                    .authorities("ROLE_CLIENT")//授予客户端的权限（常规Spring Security Authority）。
+                    .scopes("read", "write")//客户端受限的范围。如果范围未定义或为空（默认值），客户端不受范围限制。
+                    .secret("secret")//（受信任客户端必需）客户端密钥（如果有）。
                     .and()
                     .withClient("tonr-with-redirect")
                     .resourceIds(SPARKLR_RESOURCE_ID)

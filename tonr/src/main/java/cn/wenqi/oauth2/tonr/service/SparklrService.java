@@ -1,4 +1,6 @@
-package cn.wenqi.oauth2.tonr;
+package cn.wenqi.oauth2.tonr.service;
+
+import cn.wenqi.oauth2.tonr.SparklrException;
 
 import java.io.InputStream;
 import java.util.List;

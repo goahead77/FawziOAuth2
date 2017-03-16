@@ -1,5 +1,6 @@
-package cn.wenqi.oauth2.sparklr.mvc;
+package cn.wenqi.oauth2.sparklr.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.common.util.OAuth2Utils;
 import org.springframework.security.oauth2.provider.AuthorizationRequest;
 import org.springframework.security.oauth2.provider.ClientDetails;
@@ -21,8 +22,11 @@ import java.util.Map;
 @Controller
 @SessionAttributes("authorizationRequest")
 public class AccessConfirmationController {
+
+    @Autowired
     private ClientDetailsService clientDetailsService;
 
+    @Autowired
     private ApprovalStore approvalStore;
 
     @RequestMapping("/oauth/confirm_access")
@@ -51,13 +55,5 @@ public class AccessConfirmationController {
         // the JSON will already have been rendered.
         model.put("message", "There was a problem with the OAuth2 protocol");
         return "oauth_error";
-    }
-
-    public void setClientDetailsService(ClientDetailsService clientDetailsService) {
-        this.clientDetailsService = clientDetailsService;
-    }
-
-    public void setApprovalStore(ApprovalStore approvalStore) {
-        this.approvalStore = approvalStore;
     }
 }

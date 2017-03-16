@@ -1,4 +1,4 @@
-package cn.wenqi.oauth2.sparklr;
+package cn.wenqi.oauth2.sparklr.model;
 
 /**
  * @author wenqi

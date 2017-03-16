@@ -1,7 +1,8 @@
-package cn.wenqi.oauth2.sparklr.mvc;
+package cn.wenqi.oauth2.sparklr.controller;
 
-import cn.wenqi.oauth2.sparklr.PhotoInfo;
-import cn.wenqi.oauth2.sparklr.PhotoService;
+import cn.wenqi.oauth2.sparklr.model.PhotoInfo;
+import cn.wenqi.oauth2.sparklr.service.PhotoService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,8 @@ import java.util.Iterator;
  */
 @Controller
 public class PhotoController {
+
+    @Autowired
     private PhotoService photoService;
 
     @RequestMapping("/photos/{photoId}")

@@ -1,7 +1,10 @@
-package cn.wenqi.oauth2.tonr.tonr.impl;
+package cn.wenqi.oauth2.tonr.service.impl;
 
 import cn.wenqi.oauth2.tonr.SparklrException;
-import cn.wenqi.oauth2.tonr.SparklrService;
+import cn.wenqi.oauth2.tonr.service.SparklrService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestOperations;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -20,17 +23,22 @@ import java.util.List;
 /**
  * @author wenqi
  */
-public class SparklrServiceImpl implements SparklrService {
-
+@Service
+public class SparklrRedirectServiceImpl implements SparklrService {
+    @Value("#{configProperties['sparklrPhotoListURL']}")
     private String sparklrPhotoListURL;
+    @Value("#{configProperties['sparklrTrustedMessageURL']}")
     private String sparklrTrustedMessageURL;
+    @Value("#{configProperties['sparklrPhotoURLPattern']}")
     private String sparklrPhotoURLPattern;
-    private RestOperations sparklrRestTemplate;
+    @Autowired
+    private RestOperations sparklrRedirectRestTemplate;
+    @Autowired
     private RestOperations trustedClientRestTemplate;
 
     public List<String> getSparklrPhotoIds() throws SparklrException {
         try {
-            InputStream photosXML = new ByteArrayInputStream(sparklrRestTemplate.getForObject(
+            InputStream photosXML = new ByteArrayInputStream(sparklrRedirectRestTemplate.getForObject(
                     URI.create(sparklrPhotoListURL), byte[].class));
 
             final List<String> photoIds = new ArrayList<String>();
@@ -59,32 +67,11 @@ public class SparklrServiceImpl implements SparklrService {
     }
 
     public InputStream loadSparklrPhoto(String id) throws SparklrException {
-        return new ByteArrayInputStream(sparklrRestTemplate.getForObject(
+        return new ByteArrayInputStream(sparklrRedirectRestTemplate.getForObject(
                 URI.create(String.format(sparklrPhotoURLPattern, id)), byte[].class));
     }
 
     public String getTrustedMessage() {
         return this.trustedClientRestTemplate.getForObject(URI.create(sparklrTrustedMessageURL), String.class);
     }
-
-    public void setSparklrPhotoURLPattern(String sparklrPhotoURLPattern) {
-        this.sparklrPhotoURLPattern = sparklrPhotoURLPattern;
-    }
-
-    public void setSparklrPhotoListURL(String sparklrPhotoListURL) {
-        this.sparklrPhotoListURL = sparklrPhotoListURL;
-    }
-
-    public void setSparklrTrustedMessageURL(String sparklrTrustedMessageURL) {
-        this.sparklrTrustedMessageURL = sparklrTrustedMessageURL;
-    }
-
-    public void setSparklrRestTemplate(RestOperations sparklrRestTemplate) {
-        this.sparklrRestTemplate = sparklrRestTemplate;
-    }
-
-    public void setTrustedClientRestTemplate(RestOperations trustedClientRestTemplate) {
-        this.trustedClientRestTemplate = trustedClientRestTemplate;
-    }
-
 }

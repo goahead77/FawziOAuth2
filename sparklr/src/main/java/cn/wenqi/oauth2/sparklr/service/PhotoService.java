@@ -1,4 +1,6 @@
-package cn.wenqi.oauth2.sparklr;
+package cn.wenqi.oauth2.sparklr.service;
+
+import cn.wenqi.oauth2.sparklr.model.PhotoInfo;
 
 import java.io.InputStream;
 import java.util.Collection;

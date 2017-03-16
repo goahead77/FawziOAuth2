@@ -1,6 +1,8 @@
-package cn.wenqi.oauth2.tonr.tonr.mvc;
+package cn.wenqi.oauth2.tonr.controller;
 
-import cn.wenqi.oauth2.tonr.SparklrService;
+import cn.wenqi.oauth2.tonr.service.SparklrService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -29,6 +31,8 @@ import java.util.Iterator;
 @Controller
 public class SparklrController {
 
+    @Autowired
+    @Qualifier("sparklrServiceImpl")
     private SparklrService sparklrService;
 
     @RequestMapping("/sparklr/photos")
@@ -66,10 +70,6 @@ public class SparklrController {
     public String trusted(Model model) throws Exception {
         model.addAttribute("message", this.sparklrService.getTrustedMessage());
         return "home";
-    }
-
-    public void setSparklrService(SparklrService sparklrService) {
-        this.sparklrService = sparklrService;
     }
 
 }

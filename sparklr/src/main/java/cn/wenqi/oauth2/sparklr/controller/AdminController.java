@@ -1,6 +1,7 @@
-package cn.wenqi.oauth2.sparklr.mvc;
+package cn.wenqi.oauth2.sparklr.controller;
 
 import cn.wenqi.oauth2.sparklr.oauth.SparklrUserApprovalHandler;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
@@ -23,10 +24,14 @@ import java.util.Map;
  */
 @Controller
 public class AdminController {
+
+    @Autowired
     private ConsumerTokenServices tokenServices;
 
+    @Autowired
     private TokenStore tokenStore;
 
+    @Autowired
     private SparklrUserApprovalHandler userApprovalHandler;
 
     @RequestMapping("/oauth/cache_approvals")
@@ -94,26 +99,5 @@ public class AdminController {
                         principal.getName(), user));
             }
         }
-    }
-
-    /**
-     * @param userApprovalHandler the userApprovalHandler to set
-     */
-    public void setUserApprovalHandler(SparklrUserApprovalHandler userApprovalHandler) {
-        this.userApprovalHandler = userApprovalHandler;
-    }
-
-    /**
-     * @param tokenServices the consumerTokenServices to set
-     */
-    public void setTokenServices(ConsumerTokenServices tokenServices) {
-        this.tokenServices = tokenServices;
-    }
-
-    /**
-     * @param tokenStore the tokenStore to set
-     */
-    public void setTokenStore(TokenStore tokenStore) {
-        this.tokenStore = tokenStore;
     }
 }

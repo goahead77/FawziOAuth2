@@ -1,6 +1,8 @@
-package cn.wenqi.oauth2.tonr.tonr.mvc;
+package cn.wenqi.oauth2.tonr.controller;
 
-import cn.wenqi.oauth2.tonr.SparklrService;
+import cn.wenqi.oauth2.tonr.service.SparklrService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -26,6 +28,8 @@ import java.util.Iterator;
 @Controller
 public class SparklrRedirectController {
 
+    @Autowired
+    @Qualifier("sparklrRedirectServiceImpl")
     private SparklrService sparklrService;
 
     @RequestMapping("/sparklr/redirect")
@@ -62,9 +66,4 @@ public class SparklrRedirectController {
         headers.setContentType(MediaType.IMAGE_JPEG);
         return new ResponseEntity<BufferedImage>(body, headers, HttpStatus.OK);
     }
-
-    public void setSparklrService(SparklrService sparklrService) {
-        this.sparklrService = sparklrService;
-    }
-
 }

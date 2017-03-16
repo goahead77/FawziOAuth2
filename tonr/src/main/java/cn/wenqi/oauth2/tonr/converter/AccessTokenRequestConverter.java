@@ -1,4 +1,4 @@
-package cn.wenqi.oauth2.tonr.tonr.converter;
+package cn.wenqi.oauth2.tonr.converter;
 
 import org.springframework.core.convert.TypeDescriptor;
 import org.springframework.core.convert.converter.GenericConverter;

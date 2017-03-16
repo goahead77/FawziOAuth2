@@ -1,18 +1,18 @@
 package cn.wenqi.oauth2.tonr.config;
 
-import cn.wenqi.oauth2.tonr.SparklrService;
-import cn.wenqi.oauth2.tonr.tonr.converter.AccessTokenRequestConverter;
-import cn.wenqi.oauth2.tonr.tonr.impl.SparklrServiceImpl;
-import cn.wenqi.oauth2.tonr.tonr.mvc.FacebookController;
-import cn.wenqi.oauth2.tonr.tonr.mvc.SparklrController;
-import cn.wenqi.oauth2.tonr.tonr.mvc.SparklrRedirectController;
+import cn.wenqi.oauth2.tonr.converter.AccessTokenRequestConverter;
+import cn.wenqi.oauth2.tonr.service.impl.SparklrServiceImpl;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.ConversionServiceFactoryBean;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.BufferedImageHttpMessageConverter;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -47,6 +47,7 @@ import java.util.List;
 @SuppressWarnings("SpringJavaAutowiringInspection")
 @Configuration
 @EnableWebMvc
+@ComponentScan("cn.wenqi.oauth2")
 @PropertySource("classpath:sparklr.properties")
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
@@ -66,6 +67,14 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     }
 
     @Bean
+    public PropertiesFactoryBean configProperties(){
+        PropertiesFactoryBean factoryBean=new PropertiesFactoryBean();
+        Resource resource=new UrlResource(this.getClass().getClassLoader().getResource("sparklr.properties"));
+        factoryBean.setLocation(resource);
+        return factoryBean;
+    }
+
+    @Bean
     public ViewResolver viewResolver() {
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
         viewResolver.setPrefix("/WEB-INF/jsp/");
@@ -78,61 +87,40 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         configurer.enable();
     }
 
-    @Bean
-    public SparklrController sparklrController(@Qualifier("sparklrService")
-                                                       SparklrService sparklrService) {
-        SparklrController controller = new SparklrController();
-        controller.setSparklrService(sparklrService);
-        return controller;
-    }
 
-    @Bean
-    public SparklrRedirectController sparklrRedirectController(@Qualifier("sparklrRedirectService")
-                                                                       SparklrService sparklrService) {
-        SparklrRedirectController controller = new SparklrRedirectController();
-        controller.setSparklrService(sparklrService);
-        return controller;
-    }
 
-    @Bean
-    public FacebookController facebookController(@Qualifier("facebookRestTemplate")
-                                                         RestOperations facebookRestTemplate) {
-        FacebookController controller = new FacebookController();
-        controller.setFacebookRestTemplate(facebookRestTemplate);
-        return controller;
-    }
 
-    @Bean
-    public SparklrServiceImpl sparklrService(@Value("${sparklrPhotoListURL}")
-                                                     String sparklrPhotoListURL, @Value("${sparklrPhotoURLPattern}")
-                                                     String sparklrPhotoURLPattern, @Value("${sparklrTrustedMessageURL}")
-                                                     String sparklrTrustedMessageURL, @Qualifier("sparklrRestTemplate")
-                                                     RestOperations sparklrRestTemplate, @Qualifier("trustedClientRestTemplate")
-                                                     RestOperations trustedClientRestTemplate) {
-        SparklrServiceImpl sparklrService = new SparklrServiceImpl();
-        sparklrService.setSparklrPhotoListURL(sparklrPhotoListURL);
-        sparklrService.setSparklrPhotoURLPattern(sparklrPhotoURLPattern);
-        sparklrService.setSparklrTrustedMessageURL(sparklrTrustedMessageURL);
-        sparklrService.setSparklrRestTemplate(sparklrRestTemplate);
-        sparklrService.setTrustedClientRestTemplate(trustedClientRestTemplate);
-        return sparklrService;
-    }
-
-    @Bean
-    public SparklrServiceImpl sparklrRedirectService(@Value("${sparklrPhotoListURL}")
-                                                             String sparklrPhotoListURL, @Value("${sparklrPhotoURLPattern}")
-                                                             String sparklrPhotoURLPattern, @Value("${sparklrTrustedMessageURL}")
-                                                             String sparklrTrustedMessageURL, @Qualifier("sparklrRedirectRestTemplate")
-                                                             RestOperations sparklrRestTemplate, @Qualifier("trustedClientRestTemplate")
-                                                             RestOperations trustedClientRestTemplate) {
-        SparklrServiceImpl sparklrService = new SparklrServiceImpl();
-        sparklrService.setSparklrPhotoListURL(sparklrPhotoListURL);
-        sparklrService.setSparklrPhotoURLPattern(sparklrPhotoURLPattern);
-        sparklrService.setSparklrTrustedMessageURL(sparklrTrustedMessageURL);
-        sparklrService.setSparklrRestTemplate(sparklrRestTemplate);
-        sparklrService.setTrustedClientRestTemplate(trustedClientRestTemplate);
-        return sparklrService;
-    }
+//    @Bean
+//    public SparklrServiceImpl sparklrService(@Value("${sparklrPhotoListURL}")
+//                                                     String sparklrPhotoListURL, @Value("${sparklrPhotoURLPattern}")
+//                                                     String sparklrPhotoURLPattern, @Value("${sparklrTrustedMessageURL}")
+//                                                     String sparklrTrustedMessageURL, @Qualifier("sparklrRestTemplate")
+//                                                     RestOperations sparklrRestTemplate, @Qualifier("trustedClientRestTemplate")
+//                                                     RestOperations trustedClientRestTemplate) {
+//        SparklrServiceImpl sparklrService = new SparklrServiceImpl();
+//        sparklrService.setSparklrPhotoListURL(sparklrPhotoListURL);
+//        sparklrService.setSparklrPhotoURLPattern(sparklrPhotoURLPattern);
+//        sparklrService.setSparklrTrustedMessageURL(sparklrTrustedMessageURL);
+//        sparklrService.setSparklrRestTemplate(sparklrRestTemplate);
+//        sparklrService.setTrustedClientRestTemplate(trustedClientRestTemplate);
+//        return sparklrService;
+//    }
+//
+//    @Bean
+//    public SparklrServiceImpl sparklrRedirectService(@Value("${sparklrPhotoListURL}")
+//                                                             String sparklrPhotoListURL, @Value("${sparklrPhotoURLPattern}")
+//                                                             String sparklrPhotoURLPattern, @Value("${sparklrTrustedMessageURL}")
+//                                                             String sparklrTrustedMessageURL, @Qualifier("sparklrRedirectRestTemplate")
+//                                                             RestOperations sparklrRestTemplate, @Qualifier("trustedClientRestTemplate")
+//                                                             RestOperations trustedClientRestTemplate) {
+//        SparklrServiceImpl sparklrService = new SparklrServiceImpl();
+//        sparklrService.setSparklrPhotoListURL(sparklrPhotoListURL);
+//        sparklrService.setSparklrPhotoURLPattern(sparklrPhotoURLPattern);
+//        sparklrService.setSparklrTrustedMessageURL(sparklrTrustedMessageURL);
+//        sparklrService.setSparklrRestTemplate(sparklrRestTemplate);
+//        sparklrService.setTrustedClientRestTemplate(trustedClientRestTemplate);
+//        return sparklrService;
+//    }
 
     @Bean
     public ConversionServiceFactoryBean conversionService() {
